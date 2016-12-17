@@ -1,0 +1,84 @@
+<apex:page >
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+    <apex:includeScript value="{!$Resource.flatToNested}"/>
+        
+	<script>
+
+	var tree;
+    var preOrderOutput;    
+    var postOrderOutput;
+        
+    $(document).ready(function() {
+        
+        var flat = [];
+        flat.push({name: '2016'});
+		flat.push({name: 'Q1', parentName: '2016'});        
+		flat.push({name: 'Q2', parentName: '2016'}); 
+		flat.push({name: 'Q3', parentName: '2016'});        
+		flat.push({name: 'Q4', parentName: '2016'});    
+		flat.push({name: 'Jan', parentName: 'Q1'});                
+		flat.push({name: 'Feb', parentName: 'Q1'});     
+		flat.push({name: 'Mar', parentName: 'Q1'}); 
+		flat.push({name: 'Apr', parentName: 'Q2'});                
+		flat.push({name: 'May', parentName: 'Q2'});     
+		flat.push({name: 'Jun', parentName: 'Q2'}); 
+		flat.push({name: 'Jul', parentName: 'Q3'});                
+		flat.push({name: 'Aug', parentName: 'Q3'});     
+		flat.push({name: 'Sep', parentName: 'Q3'}); 
+		flat.push({name: 'Oct', parentName: 'Q4'});                
+		flat.push({name: 'Nov', parentName: 'Q4'});     
+		flat.push({name: 'Dec', parentName: 'Q4'});            
+        
+        tree = new FlatToNested({id:'name', parent:'parentName', children:'children'}).convert(flat);
+            
+        preOrder();
+        postOrder();
+        
+		$("#textarea1").val(JSON.stringify(tree));
+        $("#preOrderOutput").html(preOrderOutput.join(','));
+        $("#postOrderOutput").html(postOrderOutput.join(','));
+    });                     
+   
+    
+    function preOrder() {
+		preOrderOutput = [];
+        preOrderRecurse(tree);
+    }    
+    function preOrderRecurse(n) {
+        preOrderOutput.push(n.name);
+        if ('children' in n) {
+            for (var i=0; i<n.children.length; i++) {
+                preOrderRecurse(n.children[i]); 	
+            }            
+        }
+    }    
+    
+    
+    function postOrder() {
+		postOrderOutput = [];
+        postOrderRecurse(tree);
+    }    
+    function postOrderRecurse(n) {
+        if ('children' in n) {
+            for (var i=0; i<n.children.length; i++) {
+                postOrderRecurse(n.children[i]); 	
+            }            
+        }
+        postOrderOutput.push(n.name);
+    }
+
+    </script>
+    
+    
+    <textarea id="textarea1" rows="4" cols="50"/>
+    
+    <br/>
+    
+    preorder traversal<br/>
+    <span id='preOrderOutput'/>
+    <br/><br/>
+    postorder traversal<br/>
+    <span id='postOrderOutput'/>    
+    
+</apex:page>

@@ -1,0 +1,16 @@
+<apex:page controller="treeCon">
+    
+    <textarea rows="4" cols="50">
+        {!treeJSON}
+    </textarea>
+
+    <br/>
+
+    preorder traversal<br/>
+    {!sPreOrderOutput}
+    <br/><br/>
+    postorder traversal<br/>
+    {!sPostOrderOutput} 
+    
+    
+</apex:page>

@@ -1,0 +1,89 @@
+<apex:page >
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"/>
+        
+	<script>
+
+	var tree;
+    var preOrderOutput;    
+    var postOrderOutput;
+        
+    $(document).ready(function() {
+
+        tree = 
+        {
+          "children":[
+            {
+              "name": "2016",
+              "children": [
+                {
+                  "name": "Q1",
+                  "children": [{"name": "Jan"}, {"name": "Feb"}, {"name": "Mar"}]
+                },
+                {
+                  "name": "Q2",
+                  "children": [{"name": "Apr"}, {"name": "May"}, {"name": "Jun"}]
+                },
+                {
+                  "name": "Q3",
+                  "children": [{"name": "Jul"}, {"name": "Aug"}, {"name": "Sep"}]
+                },
+                {
+                  "name": "Q4",
+                  "children": [{"name": "Oct"}, {"name": "Nov"}, {"name": "Dec"}]
+                }
+              ]
+            }        
+          ]
+        };
+              
+        preOrder();
+        postOrder();
+        
+		$("#textarea1").val(JSON.stringify(tree));
+        $("#preOrderOutput").html(preOrderOutput.join(','));
+        $("#postOrderOutput").html(postOrderOutput.join(','));
+    });                     
+   
+    
+    function preOrder() {
+		preOrderOutput = [];
+        preOrderRecurse(tree);
+    }    
+    function preOrderRecurse(n) {
+        preOrderOutput.push(n.name);
+        if ('children' in n) {
+            for (var i=0; i<n.children.length; i++) {
+                preOrderRecurse(n.children[i]); 	
+            }            
+        }
+    }    
+    
+    
+    function postOrder() {
+		postOrderOutput = [];
+        postOrderRecurse(tree);
+    }    
+    function postOrderRecurse(n) {
+        if ('children' in n) {
+            for (var i=0; i<n.children.length; i++) {
+                postOrderRecurse(n.children[i]); 	
+            }            
+        }
+        postOrderOutput.push(n.name);
+    }
+
+    </script>
+    
+    
+    <textarea id="textarea1" rows="4" cols="50"/>
+    
+    <br/>
+    
+    preorder traversal<br/>
+    <span id='preOrderOutput'/>
+    <br/><br/>
+    postorder traversal<br/>
+    <span id='postOrderOutput'/>    
+    
+</apex:page>

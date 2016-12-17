@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>tree</fullName>
+    <types>
+        <members>treeCon</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>treeApex</members>
+        <members>treeJS</members>
+        <members>treeJSflat</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>flatToNested</members>
+        <name>StaticResource</name>
+    </types>
+    <version>38.0</version>
+</Package>
